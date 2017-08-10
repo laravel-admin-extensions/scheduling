@@ -12,5 +12,7 @@ class SchedulingServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-admin-scheduling');
+
+        Scheduling::boot();
     }
 }
