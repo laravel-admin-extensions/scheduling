@@ -29,8 +29,9 @@ class Scheduling extends Extension
     /**
      * Get all formatted tasks.
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     public function getTasks()
     {
@@ -53,6 +54,7 @@ class Scheduling extends Extension
      * Format a giving task.
      *
      * @param $event
+     *
      * @return array
      */
     protected function formatTask($event)
@@ -66,9 +68,10 @@ class Scheduling extends Extension
 
         if (Str::contains($event->command, '\'artisan\'')) {
             $exploded = explode(' ', $event->command);
+
             return [
                 'type' => 'artisan',
-                'name' => 'artisan '. join(' ', array_slice($exploded, 2)),
+                'name' => 'artisan '.implode(' ', array_slice($exploded, 2)),
             ];
         }
 
@@ -81,7 +84,8 @@ class Scheduling extends Extension
     /**
      * Run specific task.
      *
-     * @param integer $id
+     * @param int $id
+     *
      * @return string
      */
     public function runTask($id)
@@ -89,7 +93,7 @@ class Scheduling extends Extension
         set_time_limit(0);
 
         /** @var \Illuminate\Console\Scheduling\Event $event */
-        $event = $this->getKernelEvents()[$id-1];
+        $event = $this->getKernelEvents()[$id - 1];
 
         $event->sendOutputTo($this->getOutputTo());
 
@@ -119,7 +123,7 @@ class Scheduling extends Extension
     {
         return file_get_contents($this->getOutputTo());
     }
-    
+
     /**
      * Bootstrap this package.
      *

@@ -28,6 +28,7 @@ class SchedulingController
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     public function runEvent(Request $request)
