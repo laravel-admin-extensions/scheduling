@@ -56,7 +56,7 @@ class CronSchedule
     private $_cronYears = [];
 
     // The language table
-    private $_lang = false;
+    private $_lang = [];
 
     /**
      * Minimum and maximum years to cope with the Year 2038 problem in UNIX. We run PHP which most likely runs on a UNIX environment so we
