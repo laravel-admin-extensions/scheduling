@@ -75,6 +75,15 @@ class Scheduling extends Extension
             ];
         }
 
+        if (PHP_OS_FAMILY === 'Windows' && Str::contains($event->command, '"artisan"')) {
+            $exploded = explode(' ', $event->command);
+
+            return [
+                'type' => 'artisan',
+                'name' => 'artisan '.implode(' ', array_slice($exploded, 2)),
+            ];
+        }
+
         return [
             'type' => 'command',
             'name' => $event->command,
@@ -94,6 +103,10 @@ class Scheduling extends Extension
 
         /** @var \Illuminate\Console\Scheduling\Event $event */
         $event = $this->getKernelEvents()[$id - 1];
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $event->command = Str::of($event->command)->replace('php-cgi.exe', 'php.exe');
+        }
 
         $event->sendOutputTo($this->getOutputTo());
 
